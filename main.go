@@ -7,9 +7,9 @@ import (
 
 
 func main() {
-	fmt.Println("init")
+	fmt.Println("+---------------------------+")
 
 	app.Run()
 
-	fmt.Println("end")
+	fmt.Println("+---------------------------+")
 }
