@@ -32,8 +32,8 @@ func callFZF() string {
 		[]string{"ls", filesPath},
 		[]string{
             "fzf", 
-            "--height",
-            "40%",
+            // "--height",
+            // "40%",
             "--layout",
             "reverse",
             "--info",
@@ -89,13 +89,17 @@ func new() map[string]string {
 		scanner.Scan()
 		in := scanner.Text()
 
+		if in == "/end" {
+			return contents
+		}
+
 		if contents["title"] == "" {
 			contents["title"] = in
-		} else if contents["body"] == "" {
-			contents["body"] = in
-			fmt.Println(contents["title"])
-			fmt.Println(contents["body"])
-			return contents
+		} else {
+			contents["body"] += in + "\n"
+			fmt.Println("title: "+contents["title"])
+			fmt.Println("body: "+contents["body"])
+			// return contents
 		}
 	}
 }
