@@ -1,6 +1,7 @@
 package app
 
 import (
+	"bufio"
 	"fmt"
 	"log"
 	"os"
@@ -14,7 +15,16 @@ import (
 var filesPath string = os.Getenv("HOME")+"/.cli_memo_app/memos/"
 
 func Run() {
-	fmt.Println(stdOut(callFZF()))
+	if len(os.Args) == 1 {
+		// no args
+		fmt.Println(stdOut(callFZF()))
+		return
+	} 
+
+	switch os.Args[1] {
+	case "-c":
+		createMemo(new())
+	}
 }
 
 func callFZF() string {
@@ -49,4 +59,43 @@ func stdOut(fileName string) string {
 		log.Fatal(err)
 	}
 	return string(out)
+}
+
+func createMemo(contents map[string]string) {
+	fp, err := os.Create(filesPath + contents["title"] + ".txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer fp.Close()
+	fp.WriteString(contents["body"])
+}
+
+
+func new() map[string]string {
+	scanner := bufio.NewScanner(os.Stdin)
+
+	contents := map[string]string {
+		"title": "",
+		"body": "",
+	}
+
+	for {
+		if contents["title"] == "" {
+			fmt.Print("title: ")
+		} else {
+			fmt.Print("body: ")
+		}
+
+		scanner.Scan()
+		in := scanner.Text()
+
+		if contents["title"] == "" {
+			contents["title"] = in
+		} else if contents["body"] == "" {
+			contents["body"] = in
+			fmt.Println(contents["title"])
+			fmt.Println(contents["body"])
+			return contents
+		}
+	}
 }
