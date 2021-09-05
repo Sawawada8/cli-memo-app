@@ -1,8 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"cliMemoApp/app"
+	"fmt"
+)
 
 
 func main() {
-	fmt.Println("init")
+	fmt.Println("+---------------------------+")
+
+	app.Run()
+
+	fmt.Println("+---------------------------+")
 }
