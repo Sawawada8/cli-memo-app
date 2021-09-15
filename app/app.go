@@ -39,8 +39,8 @@ func callFZF() string {
             "--info",
             "inline",
             "--border",
-            "--preview",
-            "cat "+filesPath+"{}",
+            // "--preview",
+            // "cat "+filesPath+"{}",
         },
 	)
 	if err != nil {
