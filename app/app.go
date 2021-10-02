@@ -22,7 +22,7 @@ func Run() {
 	} 
 
 	switch os.Args[1] {
-	case "-c":
+	case "-c", "--create":
 		createMemo(new())
 	}
 }
