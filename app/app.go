@@ -31,17 +31,17 @@ func callFZF() string {
 	out, err := pipeline.Output(
 		[]string{"ls", filesPath},
 		[]string{
-            "fzf", 
-            // "--height",
-            // "40%",
-            "--layout",
-            "reverse",
-            "--info",
-            "inline",
-            "--border",
-            // "--preview",
-            // "cat "+filesPath+"{}",
-        },
+			"fzf",
+			// "--height",
+			// "40%",
+			"--layout",
+			"reverse",
+			"--info",
+			"inline",
+			"--border",
+			// "--preview",
+			// "cat "+filesPath+"{}",
+		},
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -90,16 +90,17 @@ func new() map[string]string {
 		in := scanner.Text()
 
 		if in == "/end" {
-			return contents
+			break
 		}
 
 		if contents["title"] == "" {
 			contents["title"] = in
 		} else {
 			contents["body"] += in + "\n"
-			fmt.Println("title: "+contents["title"])
-			fmt.Println("body: "+contents["body"])
+			fmt.Println("title: " + contents["title"])
+			fmt.Println("body: \n" + contents["body"])
 			// return contents
 		}
 	}
+	return contents
 }
