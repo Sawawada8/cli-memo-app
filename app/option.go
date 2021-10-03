@@ -4,7 +4,7 @@ type Option struct {
 	List []string;
 }
 
-func OptionNew() Option {
+func NewOption() *Option {
 	// default argument
 	list := []string{
 		"fzf", 
@@ -15,7 +15,7 @@ func OptionNew() Option {
 		"--border",
 	}
 
-	return Option{
+	return &Option{
 		List: list,
 	}
 }

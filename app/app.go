@@ -14,7 +14,7 @@ import (
 var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/memos/"
 
 func Run() {
-	fzfOption := OptionNew().List
+	fzfOption := NewOption().List
 
 	if len(os.Args) == 1 {
 		// no args
