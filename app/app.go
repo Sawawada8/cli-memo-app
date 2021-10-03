@@ -14,13 +14,21 @@ import (
 var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/memos/"
 
 func Run() {
+	fzfOption := OptionNew().List
+
 	if len(os.Args) == 1 {
 		// no args
-		fmt.Println(stdOut(callFZF()))
+		fmt.Println(stdOut(callFZF(fzfOption)))
 		return
 	}
 
 	switch os.Args[1] {
+	case "-v", "--view":
+		fzfOption = append(fzfOption, 
+			"--preview",
+			"cat "+filesPath+"{}",
+		)
+		fmt.Println(stdOut(callFZF(fzfOption)))
 	case "-c", "--create":
 		createMemo(new())
 	case "-h", "--help":
@@ -30,21 +38,10 @@ func Run() {
 	}
 }
 
-func callFZF() string {
+func callFZF(fzfOption []string) string {
 	out, err := pipeline.Output(
 		[]string{"ls", filesPath},
-		[]string{
-			"fzf",
-			// "--height",
-			// "40%",
-			"--layout",
-			"reverse",
-			"--info",
-			"inline",
-			"--border",
-			// "--preview",
-			// "cat "+filesPath+"{}",
-		},
+		fzfOption,
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -78,6 +75,7 @@ func showHelp() {
 	fmt.Println("")
 	fmt.Println("オプション無し : 既存のメモ一覧を表示します。")
 	fmt.Println("-c, --create   : memoを作成します。")
+	fmt.Println("-v, --view     : コンテンツを表示します。")
 	fmt.Println("-h, --help     : helpを表示します。")
 }
 
