@@ -34,7 +34,7 @@ func Run() {
 	case "-h", "--help":
 		showHelp()
 	default:
-		fmt.Println(os.Args[1], "は存在しないオプションです。")
+		fmt.Println(os.Args[1], "は存在しないオプションです。\n-h, --help でオプション一覧を表示します。")
 	}
 }
 
