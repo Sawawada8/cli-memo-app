@@ -11,37 +11,37 @@ import (
 	"github.com/mattn/go-pipeline"
 )
 
-
-var filesPath string = os.Getenv("HOME")+"/.cli_memo_app/memos/"
+var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/memos/"
 
 func Run() {
+	fzfOption := NewOption().List
+
 	if len(os.Args) == 1 {
 		// no args
-		fmt.Println(stdOut(callFZF()))
+		fmt.Println(stdOut(callFZF(fzfOption)))
 		return
-	} 
+	}
 
 	switch os.Args[1] {
+	case "-v", "--view":
+		fzfOption = append(fzfOption, 
+			"--preview",
+			"cat "+filesPath+"{}",
+		)
+		fmt.Println(stdOut(callFZF(fzfOption)))
 	case "-c", "--create":
 		createMemo(new())
+	case "-h", "--help":
+		showHelp()
+	default:
+		fmt.Println(os.Args[1], "は存在しないオプションです。\n-h, --help でオプション一覧を表示します。")
 	}
 }
 
-func callFZF() string {
+func callFZF(fzfOption []string) string {
 	out, err := pipeline.Output(
 		[]string{"ls", filesPath},
-		[]string{
-            "fzf", 
-            // "--height",
-            // "40%",
-            "--layout",
-            "reverse",
-            "--info",
-            "inline",
-            "--border",
-            "--preview",
-            "cat "+filesPath+"{}",
-        },
+		fzfOption,
 	)
 	if err != nil {
 		log.Fatal(err)
@@ -70,11 +70,19 @@ func createMemo(contents map[string]string) {
 	fp.WriteString(contents["body"])
 }
 
+func showHelp() {
+	fmt.Println("cmemo <option>")
+	fmt.Println("")
+	fmt.Println("オプション無し : 既存のメモ一覧を表示します。")
+	fmt.Println("-c, --create   : memoを作成します。")
+	fmt.Println("-v, --view     : コンテンツを表示します。")
+	fmt.Println("-h, --help     : helpを表示します。")
+}
 
 func new() map[string]string {
 	scanner := bufio.NewScanner(os.Stdin)
 
-	contents := map[string]string {
+	contents := map[string]string{
 		"title": "",
 		"body": "",
 	}
@@ -90,16 +98,17 @@ func new() map[string]string {
 		in := scanner.Text()
 
 		if in == "/end" {
-			return contents
+			break
 		}
 
 		if contents["title"] == "" {
 			contents["title"] = in
 		} else {
 			contents["body"] += in + "\n"
-			fmt.Println("title: "+contents["title"])
-			fmt.Println("body: "+contents["body"])
+			fmt.Println("title: " + contents["title"])
+			fmt.Println("body: \n" + contents["body"])
 			// return contents
 		}
 	}
+	return contents
 }
