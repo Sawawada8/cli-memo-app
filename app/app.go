@@ -83,6 +83,7 @@ func showHelp() {
 	fmt.Println("オプション無し : 既存のメモ一覧を表示します。")
 	fmt.Println("-c, --create   : memoを作成します。")
 	fmt.Println("-v, --view     : コンテンツを表示します。")
+	fmt.Println("--height <xx%>   : FZF window の高さを指定します。(default: 40%)")
 	fmt.Println("-h, --help     : helpを表示します。")
 }
 
