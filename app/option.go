@@ -13,9 +13,15 @@ func NewOption() *Option {
 		"--info",
 		"inline",
 		"--border",
+		// "--height",
+		// "40%",
 	}
 
 	return &Option{
 		List: list,
 	}
+}
+
+func AddHeight(list []string, height string) []string {
+	return append(list, "--height", height)
 }

@@ -33,6 +33,13 @@ func Run() {
 		createMemo(new())
 	case "-h", "--help":
 		showHelp()
+	case "--height":
+		if len(os.Args) == 3 {
+			fzfOption = AddHeight(fzfOption, os.Args[2])
+		} else {
+			fzfOption = AddHeight(fzfOption, "40%")
+		}
+		fmt.Println(stdOut(callFZF(fzfOption)))
 	default:
 		fmt.Println(os.Args[1], "は存在しないオプションです。\n-h, --help でオプション一覧を表示します。")
 	}
