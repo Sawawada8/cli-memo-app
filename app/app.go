@@ -16,15 +16,32 @@ var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/memos/"
 func Run() {
 	fzfOption := NewOption().List
 
-	if len(os.Args) == 1 {
+	switch len(os.Args) {
+	case 1:
 		// no args
 		fmt.Println(stdOut(callFZF(fzfOption)))
 		return
+	case 3:
+	case 4:
+		if IsContains(os.Args, []string{"--height", "-v"}) {
+			fzfOption = append(fzfOption,
+				"--preview",
+				"cat "+filesPath+"{}",
+			)
+			if len(os.Args) == 4 {
+				fzfOption = AddHeight(fzfOption, os.Args[2])
+			} else {
+				fzfOption = AddHeight(fzfOption, "40%")
+			}
+			fmt.Println(stdOut(callFZF(fzfOption)))
+			return
+		}
 	}
 
+	// one args
 	switch os.Args[1] {
 	case "-v", "--view":
-		fzfOption = append(fzfOption, 
+		fzfOption = append(fzfOption,
 			"--preview",
 			"cat "+filesPath+"{}",
 		)
@@ -92,7 +109,7 @@ func new() map[string]string {
 
 	contents := map[string]string{
 		"title": "",
-		"body": "",
+		"body":  "",
 	}
 
 	for {

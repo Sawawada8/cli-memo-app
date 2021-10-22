@@ -1,13 +1,13 @@
 package app
 
 type Option struct {
-	List []string;
+	List []string
 }
 
 func NewOption() *Option {
 	// default argument
 	list := []string{
-		"fzf", 
+		"fzf",
 		"--layout",
 		"reverse",
 		"--info",
@@ -24,4 +24,20 @@ func NewOption() *Option {
 
 func AddHeight(list []string, height string) []string {
 	return append(list, "--height", height)
+}
+
+func IsContains(args []string, words []string) bool {
+	count := len(words) - 1
+	for i := 0; i < len(args); i++ {
+		for ii := 0; ii < len(words); i++ {
+			if args[i] == words[ii] {
+				count--
+				break
+			}
+		}
+		if count <= 0 {
+			return true
+		}
+	}
+	return false
 }
