@@ -27,9 +27,12 @@ func AddHeight(list []string, height string) []string {
 }
 
 func IsContains(args []string, words []string) bool {
-	count := len(words) - 1
+	count := len(words)
+	if count == 0 {
+		return false
+	}
 	for i := 0; i < len(args); i++ {
-		for ii := 0; ii < len(words); i++ {
+		for ii := 0; ii < len(words); ii++ {
 			if args[i] == words[ii] {
 				count--
 				break

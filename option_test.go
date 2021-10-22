@@ -12,8 +12,8 @@ func TestIsContainsArgs(t *testing.T) {
 		"-v",
 		"--height",
 	})
-	if res {
-		t.Errorf("Abs(true) = %t; want true", res)
+	if !res {
+		t.Errorf("Abs(false) = %t; want true", res)
 	}
 }
 
@@ -25,7 +25,7 @@ func TestIsContainsArgsLessArgs(t *testing.T) {
 		"--height",
 	})
 	if res {
-		t.Errorf("Abs(true) = %t; want true", res)
+		t.Errorf("Abs(true) = %t; want false", res)
 	}
 }
 
@@ -36,7 +36,7 @@ func TestIsContainsArgsFalse(t *testing.T) {
 		"--height",
 	})
 	if !res {
-		t.Errorf("Abs(false) = %t; want false", res)
+		t.Errorf("Abs(false) = %t; want true", res)
 	}
 }
 
@@ -44,7 +44,7 @@ func TestIsContainsArgsNowords(t *testing.T) {
 	res := app.IsContains([]string{
 		"cmemo", "--height", "40%", "-v",
 	}, []string{})
-	if !res {
-		t.Errorf("Abs(false) = %t; want false", res)
+	if res {
+		t.Errorf("Abs(true) = %t; want false", res)
 	}
 }
