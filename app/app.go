@@ -23,6 +23,7 @@ func Run() {
 		return
 	case 3:
 	case 4:
+		// --height XX% -v or --height -v
 		if IsContains(os.Args, []string{"--height", "-v"}) {
 			fzfOption = append(fzfOption,
 				"--preview",
