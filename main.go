@@ -21,7 +21,7 @@ func main() {
 }
 
 func existFZF() bool {
-	output, _ := exec.Command("which", "fzfff").Output()
+	output, _ := exec.Command("which", "fzf").Output()
 
 	return len(output) != 0
 }
