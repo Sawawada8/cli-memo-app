@@ -11,7 +11,8 @@ import (
 	"github.com/mattn/go-pipeline"
 )
 
-var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/memos/"
+// var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/memos/"
+var filesPath string = os.Getenv("HOME") + "/.cli_memo_app/demos/"
 
 func Run() {
 	fzfOption := NewOption().List
@@ -23,12 +24,14 @@ func Run() {
 		return
 	case 3:
 	case 4:
+		// --height XX% -v or --height -v
 		if IsContains(os.Args, []string{"--height", "-v"}) {
 			fzfOption = append(fzfOption,
 				"--preview",
 				"cat "+filesPath+"{}",
 			)
 			if len(os.Args) == 4 {
+				// args 4 の場合は、高さの指定有り
 				fzfOption = AddHeight(fzfOption, os.Args[2])
 			} else {
 				fzfOption = AddHeight(fzfOption, "40%")
