@@ -4,6 +4,7 @@ type Option struct {
 	List []string
 }
 
+// defaultのfzfの設定オブジェクトを返す
 func NewOption() *Option {
 	// default argument
 	list := []string{
@@ -22,6 +23,7 @@ func NewOption() *Option {
 	}
 }
 
+// heightオプションを追加する
 func AddHeight(list []string, height string) []string {
 	return append(list, "--height", height)
 }
